@@ -1,24 +1,35 @@
-import * as bootstrap from "bootstrap";
-import autocomplete from "autocompleter";
+import Choices from "choices.js";
 
-const countries = [
-	{ label: "Indonesia", value: "ID" },
-	{ label: "Malaysia", value: "MY" },
-	{ label: "Singapore", value: "SG" }
-];
+const period = document.getElementById('nemos-year');
+const name = document.getElementById('nemos-name');
+const find = document.getElementById('finding-nemo');
 
-let input = document.getElementById("country");
-
-autocomplete({
-	input,
-	fetch: function (text, update) {
-		text = text.toLowerCase();
-
-		let suggestions = countries.filter(n => n.label.toLowerCase(text));
-		update(suggestions);
+const periodChoices = new Choices(period, {
+	classNames: {
+		containerInner: period.className,
+		input: 'form-control',
+		inputCloned: 'form-control-sm',
+		listDropdown: 'dropdown-menu',
+		itemChoice: 'dropdown-item',
+		activeState: 'show',
+		selectedState: 'active',
 	},
-	onSelect: function (item) {
-		input.value = item.label;
-		console.log(item);
-	}
+	shouldSort: false,
+	searchEnabled: false,
+});
+
+find.addEventListener('click', function (evt) {
+	let element = this;
+	let icon = element.querySelector('#find-nemo-icon');
+
+	// change search icon to loader
+	icon.classList.remove('ti', 'ti-search');
+	icon.classList.add('spinner-border', 'spinner-border-sm');
+
+	// disable period & name field
+	name.setAttribute('disabled', 'disabled');
+	find.setAttribute('disabled', 'disabled');
+
+	// hide period field
+	period.parentNode.style.display = 'none';
 });

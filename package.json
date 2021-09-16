@@ -15,13 +15,11 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "@popperjs/core": "^2.10.1",
-    "bootstrap": "^5.1.1",
+    "autocompleter": "^6.1.2",
+    "choices.js": "^9.0.1",
     "node-sass": "^6.0.1",
     "parcel-bundler": "^1.9.4",
     "rimraf": "^3.0.2",
     "sass": "^1.39.2"
-  },
-  "dependencies": {
-    "autocompleter": "^6.1.2"
   }
 }
