@@ -1,27 +1,38 @@
-name: Deploy
+name: Build & Deploy
+
 on:
+  workflow_dispatch:
   push:
     branches:
-    - main
+      - main
+
 jobs:
-  build-deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - run: node --version
-    - name: Cache node modules
-      uses: actions/cache@v2
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-npm-
-    - name: Install dependencies
-      run: npm ci
-    - name: Build
-      run: npm run build --if-present
-    - name: Deploy
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./dist
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js ⛽
+        uses: actions/setup-node@v2
+        with:
+          node-version: "10"
+          cache: "npm"
+
+      - name: Cache Dependencies ✨
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: npm-
+
+      - name: Install and Compile 🔧
+        run: |
+          npm ci --unsafe-perm=true --force
+          npm run build
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.1
+        with:
+          branch: gh-pages
+          folder: dist
