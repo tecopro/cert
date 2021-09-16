@@ -15,7 +15,7 @@ jobs:
 
       - name: Install and Compile 🔧
         run: |
-          npm ci --unsafe-perm=true --force
+          npm i --unsafe-perm=true --force
           npm run build
 
       - name: Deploy 🚀
