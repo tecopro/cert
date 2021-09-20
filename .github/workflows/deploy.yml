@@ -13,9 +13,22 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v2
 
+      - name: Setup Node.js ⛽
+        uses: actions/setup-node@v2
+        with:
+          node-version: "12"
+          cache: "npm"
+
+      - name: Cache Dependencies ✨
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: npm-
+
       - name: Install and Compile 🔧
         run: |
-          npm i --unsafe-perm=true --force
+          npm ci --unsafe-perm=true --force
           npm run build
 
       - name: Deploy 🚀

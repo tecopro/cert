@@ -21,14 +21,12 @@
 
 	<link rel="icon" href="//teco.smkn1pml.sch.id/favicon.ico" type="image/x-icon" />
 	<link rel="shortcut icon" href="//teco.smkn1pml.sch.id/favicon.ico" type="image/x-icon" />
-	<meta name="description"
-		content="Technology Community atau yang biasa kita sebut TECO adalah salah satu Ekstrakurikuler, Komunitas, sekaligus Oranisasi yan ada di SMK Negeri 1 Pemalang." />
+	<meta name="description" content="Technology Community atau yang biasa kita sebut TECO adalah salah satu Ekstrakurikuler, Komunitas, sekaligus Oranisasi yan ada di SMK Negeri 1 Pemalang." />
 	<meta property="og:site_name" content="E-Certificate Technology Community">
 	<meta property="og:type" content="object">
 	<meta property="og:title" content="E-Certificate Technology Community">
 	<meta property="og:url" content="//teco.smkn1pml.sch.id/cert">
-	<meta property="og:description"
-		content="Technology Community atau yang biasa kita sebut TECO adalah salah satu Ekstrakurikuler, Komunitas, sekaligus Oranisasi yan ada di SMK Negeri 1 Pemalang.">
+	<meta property="og:description" content="Technology Community atau yang biasa kita sebut TECO adalah salah satu Ekstrakurikuler, Komunitas, sekaligus Oranisasi yan ada di SMK Negeri 1 Pemalang.">
 
 	<link rel="stylesheet" href="//unpkg.com/@tabler/core@latest/dist/css/tabler.min.css">
 	<link rel="stylesheet" href="//unpkg.com/@tabler/core@latest/dist/css/tabler-flags.min.css">
@@ -39,6 +37,10 @@
 </head>
 
 <body class="antialiased border-top-wide border-primary d-flex flex-column">
+	<div id="preloader">
+		<div id="loader"></div>
+	</div>
+
 	<div class="page page-center">
 		<div class="container-tight py-4">
 			<div class="text-center mb-4">
@@ -60,10 +62,26 @@
 				<div class="hr-text hr-text-center hr-text-spacaless">E-Certificate</div>
 
 				<div class="card-body" id="nemo-is-finded">
+					<div id="alert" class="alert alert-important alert-danger alert-dismissible" style="display: none;" role="alert">
+						<div class="d-flex">
+							<div>
+								<svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+									<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+									<circle cx="12" cy="12" r="9" />
+									<line x1="12" y1="8" x2="12" y2="12" />
+									<line x1="12" y1="16" x2="12.01" y2="16" />
+								</svg>
+							</div>
+							<div id="error-message"></div>
+						</div>
+						<a class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="close"></a>
+					</div>
+
 					<div class="mb-3">
 						<label for="" class="form-label">Periode</label>
 						<select class="form-select" id="nemos-year">
 							<option value="2019-2020">2019/2020</option>
+							<option value="2020-2021">2020/2021</option>
 						</select>
 					</div>
 

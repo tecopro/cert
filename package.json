@@ -3,8 +3,9 @@
   "version": "0.0.1",
   "main": "src/main.js",
   "scripts": {
+    "predev": "rimraf dist",
     "dev": "parcel ./src/index.html",
-    "prebuild": "rimraf build",
+    "prebuild": "rimraf dist",
     "build": "parcel build --no-source-maps --public-url /cert --experimental-scope-hoisting ./src/index.html"
   },
   "author": {
@@ -16,10 +17,15 @@
   "devDependencies": {
     "@popperjs/core": "^2.10.1",
     "autocompleter": "^6.1.2",
+    "axios": "^0.21.4",
+    "bootstrap": "^5.1.1",
     "choices.js": "^9.0.1",
     "node-sass": "^6.0.1",
     "parcel-bundler": "^1.9.4",
     "rimraf": "^3.0.2",
     "sass": "^1.39.2"
-  }
+  },
+  "browserslist": [
+    "since 2017-06"
+  ]
 }
