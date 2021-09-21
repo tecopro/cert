@@ -59,7 +59,10 @@ document.addEventListener("DOMContentLoaded", function () {
 			// filter by name
 			// and get first index
 			let result = response.data.filter(function (row) {
-				return (row?.name || "").includes(name.value);
+				let thisname = (row?.name || "").toLowerCase();
+				let nemoname = (name.value || "").toLowerCase();
+
+				return thisname.includes(nemoname);
 			}).shift();
 
 			if (typeof result === "undefined") {
