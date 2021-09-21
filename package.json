@@ -3,10 +3,9 @@
   "version": "0.0.1",
   "main": "src/main.js",
   "scripts": {
-    "predev": "rimraf dist",
     "dev": "parcel ./src/index.html",
     "prebuild": "rimraf dist",
-    "build": "parcel build --no-source-maps --public-url /cert --experimental-scope-hoisting ./src/index.html"
+    "build": "parcel build --public-url /cert ./src/index.html"
   },
   "author": {
     "name": "Suluh Sulistiawan",

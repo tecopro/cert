@@ -4,6 +4,10 @@
 	min-height: calc(100vh - 2px);
 }
 
+.container-tight {
+	max-width: 38rem;
+}
+
 #preloader {
 	background-color: #f4f6fa;
 	position: fixed;
