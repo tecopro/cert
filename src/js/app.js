@@ -27,7 +27,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	const search = async (evt) => {
 		evt.preventDefault();
-
 		let element = this;
 		let icon = element.querySelector("#find-nemo-icon");
 
@@ -40,35 +39,52 @@ document.addEventListener("DOMContentLoaded", function () {
 			name.setAttribute("disabled", "disabled");
 			find.setAttribute("disabled", "disabled");
 
+			// hide error message
+			document.getElementById("alert").style.display = "none";
+
 			// hide period field
 			period.parentNode.parentNode.parentNode.style.display = "none";
 
+			if (name.value.trim() === "") {
+				// if name is empty
+				throw "Kolom nama tidak boleh kosong.";
+			}
+
 			// process
 			let url = `https://raw.githubusercontent.com/tecopro/certificate-generator/${period.value}/data.json`;
-			let { data } = await axios.get(url).catch(function (error) {
-				throw "Maaf, sertifikat yang kamu cari tidak dapat ditemukan.";
+			let response = await axios.get(url).catch(function (error) {
+				throw "Terjadi kesalahan, silahkan coba beberapa saat lagi.";
 			});
 
-			let result = data.filter(function (row) {
-				return (row.name || "").includes(name.value);
+			// filter by name
+			// and get first index
+			let result = response.data.filter(function (row) {
+				return (row?.name || "").includes(name.value);
 			}).shift();
 
-			document.querySelectorAll('[nemo-result-name]').forEach(function (element) {
+			if (typeof result === "undefined") {
+				// if data cannot be found
+				throw "Maaf, sertifikat yang kamu cari tidak dapat ditemukan.";
+			}
+
+			// if data can be found
+			document.querySelectorAll("[nemo-result-name]").forEach(function (element) {
 				element.textContent = result.name;
 			});
-			document.querySelector('[nemo-result-position]').textContent = result.position;
-			document.querySelector('[nemo-result-predicate]').textContent = result.predicate;
-			document.querySelector('[nemo-result-period]').textContent = result.period;
+			document.querySelector("[nemo-result-position]").textContent = result.position;
+			document.querySelector("[nemo-result-predicate]").textContent = result.predicate;
+			document.querySelector("[nemo-result-period]").textContent = result.period;
 
 			let download = `https://raw.githubusercontent.com/tecopro/certificate-generator/${period.value}/certificate/${result.file}`;
-			document.querySelector('[nemo-result-download]').setAttribute("href", download);
+			document.querySelector("[nemo-result-download]").setAttribute("href", download);
 
+			// remove & display multiple sections
 			finder.remove();
 			finded.removeAttribute("style");
-
 			find.parentNode.parentNode.remove();
-			document.getElementById('refresh-the-nemo').removeAttribute('style');
+			document.getElementById("refresh-the-nemo").removeAttribute("style");
 		} catch (error) {
+			// show error message
 			document.getElementById("alert").removeAttribute("style");
 			document.getElementById("error-message").textContent = error;
 
@@ -82,6 +98,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 			// hide period field
 			period.parentNode.parentNode.parentNode.removeAttribute("style");
+
+			// focus to name field
+			name.focus();
 		}
 	};
 

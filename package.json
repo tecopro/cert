@@ -1,7 +1,7 @@
 {
   "name": "@tecopro/cert",
   "version": "0.0.1",
-  "main": "src/main.js",
+  "main": "src/js/app.js",
   "scripts": {
     "dev": "parcel ./src/index.html",
     "prebuild": "rimraf dist",
@@ -15,7 +15,6 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "@popperjs/core": "^2.10.1",
-    "autocompleter": "^6.1.2",
     "axios": "^0.21.4",
     "bootstrap": "^5.1.1",
     "choices.js": "^9.0.1",
