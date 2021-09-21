@@ -1,5 +1,4 @@
 import "regenerator-runtime/runtime";
-import * as bootstrap from "bootstrap";
 import Choices from "choices.js";
 import axios from "axios";
 
@@ -42,18 +41,18 @@ document.addEventListener("DOMContentLoaded", function () {
 			// hide error message
 			document.getElementById("alert").style.display = "none";
 
-			// hide period field
-			period.parentNode.parentNode.parentNode.style.display = "none";
+			// disable period field
+			periodChoices.disable();
 
 			if (name.value.trim() === "") {
 				// if name is empty
-				throw "Kolom nama tidak boleh kosong.";
+				throw new Error("Kolom nama tidak boleh kosong.");
 			}
 
 			// process
 			let url = `https://raw.githubusercontent.com/tecopro/certificate-generator/${period.value}/data.json`;
 			let response = await axios.get(url).catch(function (error) {
-				throw "Terjadi kesalahan, silahkan coba beberapa saat lagi.";
+				throw new Error("Terjadi kesalahan, silahkan coba beberapa saat lagi.");
 			});
 
 			// filter by name
@@ -67,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 			if (typeof result === "undefined") {
 				// if data cannot be found
-				throw "Maaf, sertifikat yang kamu cari tidak dapat ditemukan.";
+				throw new Error("Maaf, sertifikat yang kamu cari tidak dapat ditemukan.");
 			}
 
 			// if data can be found
@@ -89,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		} catch (error) {
 			// show error message
 			document.getElementById("alert").removeAttribute("style");
-			document.getElementById("error-message").textContent = error;
+			document.getElementById("error-message").textContent = error.message;
 
 			// change loader icon to search
 			icon.classList.remove("spinner-border", "spinner-border-sm");
@@ -99,20 +98,14 @@ document.addEventListener("DOMContentLoaded", function () {
 			name.removeAttribute("disabled");
 			find.removeAttribute("disabled");
 
-			// hide period field
-			period.parentNode.parentNode.parentNode.removeAttribute("style");
+			// enable period field
+			periodChoices.enable();
 
 			// focus to name field
 			name.focus();
 		}
 	};
 
-	// name on enter
-	name.addEventListener("keypress", function (evt) {
-		if (evt.key === "Enter") {
-			search(evt);
-		}
-	});
 	// find button on click
 	find.addEventListener("click", search);
 
@@ -121,4 +114,6 @@ document.addEventListener("DOMContentLoaded", function () {
 	preloader.style.transition = ".5s";
 	preloader.style.opacity = "0";
 	preloader.style.visibility = "hidden";
+}, {
+	once: true
 });
