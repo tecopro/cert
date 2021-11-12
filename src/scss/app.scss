@@ -1,3 +1,25 @@
+* {
+	&::-webkit-scrollbar {
+		background-color: #f4f6fa;
+		
+		&-track {
+			-webkit-box-shadow: inset 0 0 6px #f4f6fa;
+			box-shadow: inset 0 0 6px #f4f6fa;
+			background-color: #f4f6fa;
+			border-radius: 10px;
+		}
+		
+		&-thumb {
+			background-color: rgb(32,107,196);
+			border-radius: 10px;
+			
+			&:hover {
+				background-color: rgb(29,96,176);
+			}
+		}
+	}
+}
+
 .page {
 	min-height: calc(100vh - 2px);
 }
