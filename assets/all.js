@@ -4,11 +4,11 @@
    * @description get file from certificate-generator repository and update index.html view
    */
   document.addEventListener("DOMContentLoaded", function() {
-    const period = document.getElementById("nemos-year")
-    const name = document.getElementById("nemos-name")
-    const find = document.getElementById("finding-nemo")
-    const finder = document.getElementById("nemo-finder")
-    const finded = document.getElementById("nemo-result")
+  const period = document.getElementById("nemos-year")
+  const name = document.getElementById("nemos-name")
+  const find = document.getElementById("finding-nemo")
+  const finder = document.getElementById("nemo-finder")
+  const finded = document.getElementById("nemo-result")
 
     /**
      * @description choices.js for period
