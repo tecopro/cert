@@ -144,12 +144,12 @@ document.onreadystatechange = function (e) {
   /**
    * @description execute process based on period outside search fucntion and store in global variable
    */
-  _period.forEach(async periode => {
-    var response = await axios.get(`https://raw.githubusercontent.com/tecopro/certificate-generator/${periode}/data.json`).catch(function (e) {
-      new Error("Kolom nama tidak boleh kosong.")
+  _period.forEach(async _periode => {
+    var response = await axios.get(`https://raw.githubusercontent.com/tecopro/certificate-generator/${_periode}/data.json`).catch(function (e) {
+      new Error(e)
       modalError("Terjadi kesalahan, silahkan coba beberapa saat lagi")
     })
-    _Data[`${periode}`] = response.data
+    _Data[`${_periode}`] = response.data
   })
 
   /**
