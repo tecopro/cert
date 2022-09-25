@@ -1,151 +1,159 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-	<title>E-Certificate Technology Community</title>
-
-	<link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
-	<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-	<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
-
-	<meta name="msapplication-TileColor" content="#206bc4" />
-	<meta name="theme-color" content="#206bc4" />
-	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-	<meta name="mobile-web-app-capable" content="yes" />
-	<meta name="HandheldFriendly" content="True" />
-	<meta name="MobileOptimized" content="320" />
-
-	<link rel="icon" href="https://teco.smkn1pml.sch.id/favicon.ico" type="image/x-icon" />
-	<link rel="shortcut icon" href="https://teco.smkn1pml.sch.id/favicon.ico" type="image/x-icon" />
-	<meta name="description"
-		content="Technology Community atau yang biasa kita sebut TECO adalah salah satu Ekstrakurikuler, Komunitas, sekaligus Oranisasi yan ada di SMK Negeri 1 Pemalang." />
-	<meta property="og:site_name" content="E-Certificate Technology Community">
-	<meta property="og:type" content="object">
-	<meta property="og:title" content="E-Certificate Technology Community">
-	<meta property="og:url" content="https://teco.smkn1pml.sch.id/cert">
-	<meta property="og:description"
-		content="Technology Community atau yang biasa kita sebut TECO adalah salah satu Ekstrakurikuler, Komunitas, sekaligus Oranisasi yan ada di SMK Negeri 1 Pemalang.">
-
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/css/tabler.min.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/css/tabler-flags.min.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/css/tabler-payments.min.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/css/tabler-vendors.min.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/iconfont/tabler-icons.min.css">
-	<link rel="stylesheet" href="./assets/css/style.css">
-</head>
-
-<body class="antialiased d-flex flex-column">
-	<div id="preloader">
-		<div id="loader"></div>
-	</div>
-
-	<div class="page page-center">
-		<div class="container-tight py-4">
-			<div class="text-center mb-4">
-				<a href="/" class="text-decoration-none" target="_blank">
-					<img src="./assets/img/logo.png" alt="" height="70">
-				</a>
-				<a href="https://smkn1pml.sch.id" class="text-decoration-none mx-2" target="_blank">
-					<img src="./assets/img/smkn1pml.png" alt="" height="64">
-				</a>
-			</div>
-
-			<div class="card card-md">
-				<div class="card-body text-center py-4 p-sm-5">
-					<!-- <img src="./assets/img/certificate.svg" height="128" alt="" class="mb-n2"> -->
-					<h1>Technology Community</h1>
-					<p class="text-muted">SMK Negeri 1 Pemalang</p>
-				</div>
-
-				<div class="hr-text hr-text-center hr-text-spacaless">E-Certificate</div>
-
-				<div class="card-body py-4 p-sm-5" id="nemo-finder">
-					<div id="alert" class="alert alert-important alert-danger" style="display: none;" role="alert">
-						<div class="d-flex">
-							<div><i class="icon me-2 ti ti-alert-circle"></i></div>
-							<div id="error-message"></div>
-						</div>
-					</div>
-
-					<div class="mb-3">
-						<label for="" class="form-label">Periode</label>
-						<select class="form-select" id="nemos-year">
-							<option value="2019-2020">2019/2020</option>
-						</select>
-					</div>
-
-					<div class="mb-0">
-						<label for="" class="form-label">Cari Nama</label>
-						<input type="text" class="form-control mb-0" id="nemos-name" placeholder="Franklin Sedoyo ..."
-							autofocus="">
-					</div>
-				</div>
-
-				<div class="card-body py-4 p-sm-5" id="nemo-result" style="display: none;">
-					<h3 class="text-center mb-3">
-						Berikut Biodata Atas Nama <span nemo-result-name=""></span>
-					</h3>
-
-					<table class="table table-bordered">
-						<tbody>
-							<tr>
-								<td>Nama</td>
-								<td><span nemo-result-name=""></span></td>
-							</tr>
-							<tr>
-								<td>Sebagai</td>
-								<td><span nemo-result-position=""></span></td>
-							</tr>
-							<tr>
-								<td>Predikat</td>
-								<td><span nemo-result-predicate=""></span></td>
-							</tr>
-							<tr>
-								<td>Periode</td>
-								<td><span nemo-result-period=""></span></td>
-							</tr>
-							<tr>
-								<td>Cetak Sertifikat</td>
-								<td>
-									<a target="_blank" class="btn btn-info btn-block btn-flat" nemo-result-download="">
-										<i class="me-2 ti ti-download"></i>
-										Cetak Sertifikat
-									</a>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-
-			<div class="row align-items-center mt-3">
-				<div class="col" id="refresh-the-nemo" style="display: none;">
-					<div class="btn-list">
-						<a href="./index.html" class="btn btn-primary">
-							Refresh <i class="ms-2 ti ti-refresh"></i>
-						</a>
-					</div>
-				</div>
-
-				<div class="col">
-					<div class="btn-list justify-content-end">
-						<button id="finding-nemo" class="btn btn-primary">
-							Cari <i id="find-nemo-icon" class="ms-2 ti ti-search"></i>
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<script src="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/js/tabler.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/scripts/choices.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-	<script src="./assets/js/script.js"></script>
-</body>
-
+<html lang="id">
+    <head>
+        <title>E-Certificate Technology Community</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Technology Community atau yang biasa kita sebut TECO adalah salah satu Ekstrakurikuler, Komunitas, sekaligus Oranisasi yan ada di SMK Negeri 1 Pemalang." />
+        <meta property="og:site_name" content="E-Certificate Technology Community">
+        <meta property="og:type" content="object">
+        <meta property="og:title" content="E-Certificate Technology Community">
+        <meta property="og:url" content="https://teco.smkn1pml.sch.id/cert">
+        <meta property="og:description" content="Technology Community atau yang biasa kita sebut TECO adalah salah satu Ekstrakurikuler, Komunitas, sekaligus Oranisasi yan ada di SMK Negeri 1 Pemalang.">
+        <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+        <meta name="msapplication-TileColor" content="#206bc4" />
+        <meta name="theme-color" content="#206bc4" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="css/materialdesignicons.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://unicons.iconscout.com/release/v3.0.6/css/line.css">
+        <link href="css/style.min.css" rel="stylesheet" type="text/css" id="theme-opt">
+        <link href="css/colors/default.css" rel="stylesheet" id="color-opt">
+        <link rel="stylesheet" href="css/user.css">
+        <script defer src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script defer src="js/bootstrap.bundle.min.js"></script>
+        <script defer src="js/feather.min.js"></script>
+        <script defer src="js/plugins.init.js"></script>
+        <script defer src="js/app.js"></script>
+        <script defer src="js/user.js"></script>
+    </head>
+    <body>
+        <div id="preloader">
+            <div id="status">
+                <div class="spinner">
+                    <div class="double-bounce1"></div>
+                    <div class="double-bounce2"></div>
+                </div>
+            </div>
+        </div>
+        <section class="d-flex align-items-center justify-content-center min-vh-100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="content-certificate p-4 bg-white rounded shadow">
+                            <div class="d-table mx-auto mb-3">
+                            <a href="https://teco.smkn1pml.sch.id/"><img src="images/logo.png" class="mx-2" alt="Technology Community" width="60"></a>
+                            <a href="https://smkn1pml.sch.id/"><img src="images/sekolah.png" class="mx-2" alt="SMK Negeri 1 Pemalang" width="58"></a>
+                            </div>
+                            <h5 class="mb-3 text-center">Electronic Certificate</h5>
+                            <div id="content-search">
+                                <div class="form-floating mb-3">
+                                    <select id="period" class="form-select form-control" aria-label="Periode">
+                                        <option selected value="2019-2020">2019-2020</option>
+                                    </select>
+                                    <label for="period">Periode</label>
+                                </div>
+                                <div class="form-floating mb-2">
+                                    <input type="text" name="username" class="form-control" id="username" placeholder="Nama Pengguna">
+                                    <label for="username">Nama Peserta</label>
+                                </div>
+                                <button id="search" class="btn btn-primary w-100" type="button">Cari Sertifikat</button>
+                            </div>
+                            <p class="mb-0 text-muted mt-3 text-center">© <script>document.write(new Date().getFullYear())</script> Technology Community.<br>SMK Negeri 1 Pemalang.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="modal fade" id="content-duplicate" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header justify-content-center">
+                        <h5 class="modal-title" id="E-Certificate result">E-Certificate</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <table class="table table-center table-bordered m-0">
+                                <tbody id="content-tbody-duplicate"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="content-result" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-0">
+                    <div class="modal-header justify-content-center">
+                        <h5 class="modal-title" id="E-Certificate result">E-Certificate</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <table class="table table-center table-bordered m-0">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Nama</th>
+                                        <td id="result-name"></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Sebagai</th>
+                                        <td id="result-position"></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Predikat</th>
+                                        <td id="result-predicate"></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Periode</th>
+                                        <td id="result-period"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a id="download" type="button" class="btn btn-primary">Cetak Sertifikat</a>
+                        <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="content-error" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content rounded shadow border-0">
+                    <div class="modal-body py-5">
+                        <div class="text-center">
+                            <div class="icon d-flex align-items-center justify-content-center bg-soft-warning rounded-circle mx-auto" style="height: 95px; width:95px;">
+                                <h1 class="mb-0"><i class="uil uil-exclamation-triangle align-middle"></i></h1>
+                            </div>
+                            <div class="mt-4">
+                                <h4 id="error-heading">ERROR</h4>
+                                <p id="error-message" class="text-muted"></p>
+                                <div class="mt-4">
+                                    <button type="button" class="btn btn-outline-warning" data-bs-dismiss="modal">Tutup</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="style-switcher" class="bg-light border p-3 pt-2 pb-2" onclick="toggleSwitcher()">
+            <div>
+                <h6 class="title text-center pt-3 mb-0">Theme Option</h6>
+                <ul class="text-center list-unstyled">
+                    <li class="d-grid"><a href="javascript:void(0)" class="btn btn-sm btn-block btn-dark dark-version t-dark mt-2" onclick="setTheme('style-dark')">Dark</a></li>
+                    <li class="d-grid"><a href="javascript:void(0)" class="btn btn-sm btn-block btn-dark light-version t-light mt-2" onclick="setTheme('style')">Light</a></li>
+                </ul>
+            </div>
+            <div class="bottom">
+                <a href="javascript: void(0);" class="settings bg-white title-bg-dark shadow d-block"><i class="mdi mdi-cog ms-1 mdi-24px position-absolute mdi-spin text-primary"></i></a>
+            </div>
+        </div>
+    </body>
 </html>
