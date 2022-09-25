@@ -20,7 +20,7 @@ const tag_id = document.getElementById.bind(document),
       modalDuplicate = (period, data) => {
 
         /**
-         * @description create and clear tbody in duplicate section
+         * @description get and clear tbody in duplicate section
          */
         const tbody = tag_id("content-tbody-duplicate")
         tbody.textContent = ""
@@ -56,7 +56,10 @@ const tag_id = document.getElementById.bind(document),
         _Error.show()
       }
 
+let _Data = {}
+
 document.onreadystatechange = function (e) {
+
   const name = tag_id("username"),
         period = tag_id("period"),
         find = tag_id("search"),
@@ -72,22 +75,18 @@ document.onreadystatechange = function (e) {
               /**
                * @description return error if input "Nama Peserta" empty
                */
-              modalError("Silahkan isi kolom \"Nama Peserta\" terlebih dahulu.", "Mohon maaf dengan siapa?")
-            } else {
+              modalError("Silahkan isi kolom \"Nama Peserta\" terlebih dahulu.", "Mohon maaf anda siapa?")
+            } else if (period.value === "default") {
 
               /**
-               * @description execute process if all requirement accepted
+               * @description return error if input "Periode" unspecific
                */
-              var url = `https://raw.githubusercontent.com/tecopro/certificate-generator/${period.value}/data.json`,
-                  response = await axios.get(url).catch(function (e) {
-                    new Error("Kolom nama tidak boleh kosong.")
-                    modalError("Terjadi kesalahan, silahkan coba beberapa saat lagi. Error: ")
-                  })
-
+              modalError("Silahkan isi kolom \"Periode\" terlebih dahulu.", "Sejak kapan mengikuti TECO?")
+            } else {
               /**
                * @description filter by name
                */
-              var result = response.data.filter(function (row) {
+              var result = _Data[period.value].filter(function (row) {
                 var thisname = (row?.name || "").toLowerCase(),
                     nemoname = (name.value || "").toLowerCase()
                 return thisname.includes(nemoname)
@@ -108,6 +107,7 @@ document.onreadystatechange = function (e) {
                 /**
                  * @description if data can be found and not duplicate
                  */
+
                 result = result.shift()
                 tag_id("result-name").textContent = result.name
                 tag_id("result-position").textContent = result.position
@@ -116,7 +116,7 @@ document.onreadystatechange = function (e) {
                 tag_id("download").setAttribute("href", `https://raw.githubusercontent.com/tecopro/certificate-generator/${period.value}/certificate/${result.file}`)
 
                 /**
-                 * @description return modal showing data in database
+                 * @description return modal showing data based on result
                  */
                 modalResult.show()
               }
@@ -130,6 +130,27 @@ document.onreadystatechange = function (e) {
             modalError(e)
           }
         }
+
+  /**
+   * @description get all options child value
+   */
+  var periode = period.options, _period = []
+  for (i = 0; i < periode.length; i++) {
+    if (i > 0) {
+      _period.push(periode[i].value)
+    }
+  }
+
+  /**
+   * @description execute process based on period outside search fucntion and store in global variable
+   */
+  _period.forEach(async periode => {
+    var response = await axios.get(`https://raw.githubusercontent.com/tecopro/certificate-generator/${periode}/data.json`).catch(function (e) {
+      new Error("Kolom nama tidak boleh kosong.")
+      modalError("Terjadi kesalahan, silahkan coba beberapa saat lagi")
+    })
+    _Data[`${periode}`] = response.data
+  })
 
   /**
    * @description set event listener into search button
