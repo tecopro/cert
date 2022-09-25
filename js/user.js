@@ -135,9 +135,9 @@ document.onreadystatechange = function (e) {
    * @description get all options child value
    */
   var periode = period.options, _period = []
-  for (i = 0; i < periode.length; i++) {
-    if (i > 0) {
-      _period.push(periode[i].value)
+  for (var item of periode) {
+    if (item.value !== "default") {
+      _period.push(item.value);
     }
   }
 
