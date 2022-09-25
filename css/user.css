@@ -1,0 +1,14 @@
+th, td {
+  padding: 15px !important;
+}
+
+.content-certificate {
+  width: 100%;
+  margin: auto;
+}
+
+@media (min-width: 769px) {
+  .content-certificate {
+    max-width: 50vw;
+  }
+}
