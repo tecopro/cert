@@ -129,7 +129,7 @@ search = async (event) => {
         /**
          * @description return error if data cannot be found
          */
-        modalError(`Sepertinya ada masalah terkait nama anda, silahkan hubungi admin melalui E-Mail <tecopro.nepal@gmail.com> untuk informasi lebih lanjut.`, `Halo, ${_username_.value}!`)
+        modalError(`Sepertinya ada masalah terkait nama anda, silahkan hubungi admin melalui E-Mail <tecopro.nepal@gmail.com> untuk informasi lebih lanjut.`, `Halo, ${_username_.value.replace(/(^\w|\s\w)(\S*)/g, (_,m1,m2) => m1.toUpperCase()+m2.toLowerCase())}!`)
       } else if (result.length > 1 && username_duplicate_trim[1] === undefined) {
         /**
          * @description return modal with all duplicate name's data if any
@@ -144,6 +144,9 @@ search = async (event) => {
           result.filter((e,i) => {
             if (e.code === username_duplicate_trim[1]) {
               result = e
+            } else {
+              result = false
+              modalError(`Kepemilikan kode unik yang anda masukkan tidak sesuai dengan hasil pencarian, anda dapat mencoba untuk mengganti periode atau silahkan hubungi admin melalui E-Mail <tecopro.nepal@gmail.com> untuk informasi lebih lanjut.`, `Halo, ${username_duplicate_trim[0]} [${username_duplicate_trim[1]}]!`)
             }
           })
         } else {
@@ -151,23 +154,26 @@ search = async (event) => {
         }
 
         /**
-         * @description if data can be found and not duplicate then modify modal element
-         */
-        var _modalResult_value = [result.name, result.position, result.predicate, result.period, {"href": `https://raw.githubusercontent.com/tecopro/certificate-generator/${_period_.value}/certificate/${result.file}`}],
-          _modalResult = ["result-name", "result-position", "result-predicate", "result-period", "download"]
-        _modalResult.forEach((data, index) => {
-          if (data === "download") {
-            var key = Object.keys(_modalResult_value[index]).shift()
-            tag_id(data).setAttribute(key, _modalResult_value[index][key])
-          } else {
-            tag_id(data).textContent = _modalResult_value[index]
-          }
-        })
-
-        /**
          * @description return modal showing data based on result
          */
-        modalResult.show()
+        if (result) {
+
+          /**
+           * @description if data can be found and not duplicate then modify modal element
+           */
+          var _modalResult_value = [result.name, result.position, result.predicate, result.period, {"href": `https://raw.githubusercontent.com/tecopro/certificate-generator/${_period_.value}/certificate/${result.file}`}],
+            _modalResult = ["result-name", "result-position", "result-predicate", "result-period", "download"]
+          _modalResult.forEach((data, index) => {
+            if (data === "download") {
+              var key = Object.keys(_modalResult_value[index]).shift()
+              tag_id(data).setAttribute(key, _modalResult_value[index][key])
+            } else {
+              tag_id(data).textContent = _modalResult_value[index]
+            }
+          })
+  
+          modalResult.show()
+        }
       }
     }
   } catch (e) {
