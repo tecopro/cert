@@ -1,10 +1,12 @@
 /**
  * E-CERTIFICATE
+ * @author Sofa Machabba Haeta
+ * @copyright Technology Community
  * @description get file from certificate-generator repository and update index.html view
  */
 
 /**
- * @description declare all variables
+ * @description declare all global variables
  */
 const tag_id = document.getElementById.bind(document),
       create_tag = document.createElement.bind(document),
@@ -15,8 +17,6 @@ const tag_id = document.getElementById.bind(document),
       _username_ = tag_id("username"),
       _period_ = tag_id("period"),
       _search_ = tag_id("search")
-
-let _Data = {}
 
 /**
  * @description declare all function
@@ -63,6 +63,7 @@ modalDuplicate = (data) => {
    * @description convert duplicate name's object into table
    */
   data.forEach(value => {
+
     /**
      * @description creating new element and it is content
      */
@@ -108,7 +109,7 @@ search = async (event) => {
       /**
        * @description return error if input "Nama Peserta" empty
        */
-      modalError("Silahkan isi kolom \"Nama Peserta\" terlebih dahulu.", "Mohon maaf anda siapa?")
+      modalError("Silahkan isi kolom \"Nama Peserta\" terlebih dahulu.", "Mohon maaf dengan siapa?")
     } else if (_period_.value === "default") {
 
       /**
@@ -116,21 +117,24 @@ search = async (event) => {
        */
       modalError("Silahkan isi kolom \"Periode\" terlebih dahulu.", "Sejak kapan mengikuti TECO?")
     } else {
+
       /**
        * @description filter by name
        */
-      var username_duplicate_trim = _username_.value.split(" @ "), result = _Data[_period_.value].filter(function (row) {
+      var username_duplicate_trim = _username_.value.split(" @ "), result = JSON.parse(sessionStorage[`${_period_.value}`]).filter(function (row) {
         var thisname = (row?.name || "").toLowerCase(),
             username = (username_duplicate_trim[0] || "").toLowerCase()
         return thisname.includes(username)
       })
 
       if (typeof result === "undefined" || result.length === 0) {
+
         /**
          * @description return error if data cannot be found
          */
         modalError(`Sepertinya ada masalah terkait nama anda, silahkan hubungi admin melalui E-Mail <tecopro.nepal@gmail.com> untuk informasi lebih lanjut.`, `Halo, ${_username_.value.replace(/(^\w|\s\w)(\S*)/g, (_,m1,m2) => m1.toUpperCase()+m2.toLowerCase())}!`)
       } else if (result.length > 1 && username_duplicate_trim[1] === undefined) {
+
         /**
          * @description return modal with all duplicate name's data if any
          */
@@ -138,17 +142,13 @@ search = async (event) => {
       } else {
 
         /**
-         * @description filter result data based on code value if any
+         * @description find or shift result data based on code value if any
          */
         if (typeof username_duplicate_trim[1] === "string") {
-          result.filter((e,i) => {
-            if (e.code === username_duplicate_trim[1]) {
-              result = e
-            } else {
-              result = false
-              modalError(`Kepemilikan kode unik yang anda masukkan tidak sesuai dengan hasil pencarian, anda dapat mencoba untuk mengganti periode atau silahkan hubungi admin melalui E-Mail <tecopro.nepal@gmail.com> untuk informasi lebih lanjut.`, `Halo, ${username_duplicate_trim[0]} [${username_duplicate_trim[1]}]!`)
-            }
-          })
+          result = result.find(({ code }) => code === username_duplicate_trim[1])
+          if (result === undefined) { result = false
+            modalError(`Kepemilikan kode unik yang anda masukkan tidak sesuai dengan hasil pencarian, anda dapat mencoba untuk mengganti periode atau silahkan hubungi admin melalui E-Mail <tecopro.nepal@gmail.com> untuk informasi lebih lanjut.`, `Halo, ${username_duplicate_trim[0]} [${username_duplicate_trim[1]}]!`)
+          }
         } else {
           result = result.shift()
         }
@@ -203,7 +203,7 @@ document.onreadystatechange = function () {
     var response = await axios.get(`https://raw.githubusercontent.com/tecopro/certificate-generator/${_periode}/data.json`).catch(function (e) { new Error(e)
       modalError("Terjadi kesalahan, silahkan coba beberapa saat lagi")
     })
-    _Data[`${_periode}`] = response.data
+    sessionStorage.setItem(`${_periode}`, JSON.stringify(response.data))
   })
 
   /**
