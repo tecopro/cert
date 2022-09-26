@@ -12,7 +12,7 @@ const tag_id = document.getElementById.bind(document),
       /**
        * @description set a tag with multiple attribute at once
        */
-      setAttributes = (el, attrs) => {for(var key in attrs) {el.setAttribute(key, attrs[key])}},
+      setAttributes = (element, attributes) => {for(var key in attributes) {element.setAttribute(key, attributes[key])}},
 
       /**
        * @description output of duplicated name
@@ -29,10 +29,20 @@ const tag_id = document.getElementById.bind(document),
          * @description convert duplicate name's object into table
          */
         data.forEach(value => {
-          const _tr = create_tag("tr"), _th = create_tag("th"), _td = create_tag("td"), _button = create_tag("button")
-                _th_text = create_tag_text(`${value.name} [${value.position}]`),
-                _button_text = create_tag_text("Pilih")
+          /**
+           * @description creating new element and it is content
+           */
+          const _tr = create_tag("tr"), _th = create_tag("th"), _td = create_tag("td"), _button = create_tag("button"),
+                _th_text = create_tag_text(`${value.name} [${value.position}]`), _button_text = create_tag_text("Pilih")
+
+          /**
+           * @description set attribute into button element
+           */
           setAttributes(_button, {"type": "button","class": "btn btn-outline-primary","data-bs-dismiss": "modal","onclick": `tag_id("username").value = "${value.name}"`})
+
+          /**
+           * @description insert element or child into specific parent
+           */
           _button.appendChild(_button_text)
           _th.appendChild(_th_text)
           _td.appendChild(_button)
@@ -50,12 +60,15 @@ const tag_id = document.getElementById.bind(document),
       /**
        * @description modal error template
        */
-      modalError = (msg, h) => {
-        if (typeof h !== undefined) { tag_id("error-heading").textContent = h }
-        tag_id("error-message").textContent = msg
+      modalError = (message, heading) => {
+        if (typeof heading !== undefined) { tag_id("error-heading").textContent = heading }
+        tag_id("error-message").textContent = message
         _Error.show()
       }
 
+/**
+ * @description store all data from raw.githubusercontent.com on load
+ */
 let _Data = {}
 
 document.onreadystatechange = function (e) {
@@ -63,8 +76,8 @@ document.onreadystatechange = function (e) {
   const name = tag_id("username"),
         period = tag_id("period"),
         find = tag_id("search"),
-        search = async (evt) => {
-          evt.preventDefault()
+        search = async (event) => {
+          event.preventDefault()
           try {
 
             /**
@@ -88,8 +101,8 @@ document.onreadystatechange = function (e) {
                */
               var result = _Data[period.value].filter(function (row) {
                 var thisname = (row?.name || "").toLowerCase(),
-                    nemoname = (name.value || "").toLowerCase()
-                return thisname.includes(nemoname)
+                    username = (name.value || "").toLowerCase()
+                return thisname.includes(username)
               })
 
               /**
@@ -105,15 +118,15 @@ document.onreadystatechange = function (e) {
               } else {
 
                 /**
-                 * @description if data can be found and not duplicate
+                 * @description if data can be found and not duplicate then modify modal element
                  */
-
-                result = result.shift()
-                tag_id("result-name").textContent = result.name
-                tag_id("result-position").textContent = result.position
-                tag_id("result-predicate").textContent = result.predicate
-                tag_id("result-period").textContent = result.period
-                tag_id("download").setAttribute("href", `https://raw.githubusercontent.com/tecopro/certificate-generator/${period.value}/certificate/${result.file}`)
+                var result = result.shift(), _modalResult_value = [result.name, result.position, result.predicate, result.period,
+                    {"href": `https://raw.githubusercontent.com/tecopro/certificate-generator/${period.value}/certificate/${result.file}`}]
+                    _modalResult = ["result-name", "result-position", "result-predicate", "result-period", "download"]
+                _modalResult.forEach((data, index) => {
+                  if (data === "download") {var key = Object.keys(_modalResult_value[index]); tag_id(data).setAttribute(key.shift(), _modalResult_value[index][key])}
+                  tag_id(data).textContent = _modalResult_value[index]
+                })
 
                 /**
                  * @description return modal showing data based on result
