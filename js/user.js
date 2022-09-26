@@ -171,7 +171,6 @@ search = async (event) => {
               tag_id(data).textContent = _modalResult_value[index]
             }
           })
-  
           modalResult.show()
         }
       }
@@ -195,15 +194,11 @@ document.onreadystatechange = function () {
    * @description get all options child value
    */
   var periode = _period_.options, _period = []
-  for (var item of periode) {
-    if (item.value !== "default") {
-      _period.push(item.value);
-    }
-  }
+  for (var item of periode) {if (item.value !== "default") {_period.push(item.value)}}
 
   /**
-    * @description execute process based on period outside search fucntion and store in global variable
-    */
+   * @description execute process based on period outside search fucntion and store in global variable
+   */
   _period.forEach(async _periode => {
     var response = await axios.get(`https://raw.githubusercontent.com/tecopro/certificate-generator/${_periode}/data.json`).catch(function (e) { new Error(e)
       modalError("Terjadi kesalahan, silahkan coba beberapa saat lagi")
@@ -212,7 +207,16 @@ document.onreadystatechange = function () {
   })
 
   /**
-    * @description set event listener into search button
-    */
+   * @description set event listener into search button to execute search function
+   */
   _search_.addEventListener("click", search)
+
+  /**
+   * @description set event listener into document to execute search button
+   */
+  document.addEventListener("keypress", function(event) {
+    if (event.key === "Enter") { event.preventDefault()
+      _search_.click()
+    }
+  })
 }
