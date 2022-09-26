@@ -121,7 +121,7 @@ document.onreadystatechange = function (e) {
                  * @description if data can be found and not duplicate then modify modal element
                  */
                 var result = result.shift(), _modalResult_value = [result.name, result.position, result.predicate, result.period,
-                    {"href": `https://raw.githubusercontent.com/tecopro/certificate-generator/${period.value}/certificate/${result.file}`}]
+                    {"href": `https://raw.githubusercontent.com/tecopro/certificate-generator/${period.value}/certificate/${result.file}`}],
                     _modalResult = ["result-name", "result-position", "result-predicate", "result-period", "download"]
                 _modalResult.forEach((data, index) => {
                   if (data === "download") {var key = Object.keys(_modalResult_value[index]); tag_id(data).setAttribute(key.shift(), _modalResult_value[index][key])}
