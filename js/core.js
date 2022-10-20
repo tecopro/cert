@@ -16,8 +16,9 @@ const tag_id = document.getElementById.bind(document),
   _Error = new bootstrap.Modal("#content-error", { keyboard: false, backdrop: "static" }),
   _username_ = tag_id("username"),
   _period_ = tag_id("period"),
-  _search_ = tag_id("search"),
-  { options: _periodOptions } = _period_;
+  _search_ = tag_id("search");
+
+var { options: _periodOptions, value: _periodValue} = _period_;
 
 /**
  * @description declare all function
@@ -106,6 +107,7 @@ const setAttributes = (element, attributes) => {
    */
   search = async (event) => {
     event.preventDefault();
+    _periodValue = _period_.value
     try {
       /**
        * @description wrap all function inside if-else to avoid unexpected execution
@@ -115,7 +117,7 @@ const setAttributes = (element, attributes) => {
          * @description return error if input "Nama Peserta" empty
          */
         modalError('Silahkan isi kolom "Nama Peserta" terlebih dahulu.', "Mohon maaf dengan siapa?");
-      } else if (_period_.value === "default") {
+      } else if (_periodValue === "default") {
         /**
          * @description return error if input "Periode" unspecific
          */
@@ -125,7 +127,7 @@ const setAttributes = (element, attributes) => {
          * @description filter by name
          */
         var username_duplicate_trim = _username_.value.split(" @ "),
-          result = JSON.parse(sessionStorage[`${_period_.value}`]).filter(function (row) {
+          result = JSON.parse(sessionStorage[`${_periodValue}`]).filter(function (row) {
             var thisname = (row?.name || "").toLowerCase(),
               username = (username_duplicate_trim[0] || "").toLowerCase();
             return thisname.includes(username);
@@ -167,7 +169,7 @@ const setAttributes = (element, attributes) => {
             /**
              * @description if data can be found and not duplicate then modify modal element
              */
-            var _modalResult_value = [name, position, predicate, period, { href: `https://raw.githubusercontent.com/tecopro/certificate-generator/${_period_.value}/certificate/${file}` }],
+            var _modalResult_value = [name, position, predicate, period, { href: `https://raw.githubusercontent.com/tecopro/certificate-generator/${_periodValue}/certificate/${file}` }],
               _modalResult = ["result-name", "result-position", "result-predicate", "result-period", "download"];
             _modalResult.forEach((data, index) => {
               if (data === "download") {
