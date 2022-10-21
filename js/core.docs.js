@@ -1,17 +1,73 @@
+/**
+ * E-CERTIFICATE
+ * @author Sofa Machabba Haeta
+ * @copyright Technology Community
+ * @description get file from certificate-generator repository and update index.html view
+ */
+
+/**
+ * Table Of Content
+ * 1. Global Variable
+ *    A. Tag
+ *    B. Input
+ *    C. Modal
+ *    D. Utility
+ * 2. Document Execution
+ *    A. Period Parser
+ *    B. API & Database
+ *    C. Event Listener
+ */
+
+/**
+ * 1. Global Variable --- Start
+ */
+
+/**
+ * A. Tag --- Start
+ */
 const tag = {
   id: document.getElementById.bind(document),
   create: document.createElement.bind(document),
   content: document.createTextNode.bind(document),
 };
+/**
+ * A. Tag --- End
+ */
+
+// @ <----- BREAK -----> @ //
+
+/**
+ * B. Input --- Start
+ */
 const input = {
   user: tag.id("username"),
   period: tag.id("period"),
   search: tag.id("search"),
 };
+/**
+ * B. Input --- End
+ */
+
+// @ <----- BREAK -----> @ //
+
+/**
+ * C. Modal --- Start
+ */
 const modal = {
+  /**
+   * @description create modal and store inside variable
+   */
   result: new bootstrap.Modal("#content-result", { keyboard: false, backdrop: "static" }),
   error: new bootstrap.Modal("#content-error", { keyboard: false, backdrop: "static" }),
   duplicate: new bootstrap.Modal("#content-duplicate"),
+
+  /**
+   * @function modal.Error
+   * @description show error message using bootstrap modal
+   * @param message {string} error message
+   * @param heading {string} title/heading message
+   * @returns {void} show modal error
+   */
   Error(message, heading) {
     if (typeof heading !== undefined) {
       tag.id("error-heading").textContent = heading;
@@ -19,6 +75,13 @@ const modal = {
     tag.id("error-message").textContent = message;
     this.error.show();
   },
+
+  /**
+   * @function modal.Duplicate
+   * @description modify table and show duplicated data using bootstrap modal
+   * @param data {Object} array of duplicated data from result
+   * @returns {void} show modal duplicate
+   */
   Duplicate(data) {
     const tbody = tag.id("content-tbody-duplicate");
     tbody.textContent = "";
@@ -42,12 +105,35 @@ const modal = {
     this.duplicate.show();
   },
 };
+/**
+ * C. Modal --- End
+ */
+
+// @ <----- BREAK -----> @ //
+
+/**
+ * D. Utility --- Start
+ */
 const utility = {
+  /**
+   * @function utility.setAttr
+   * @description create multiple element attribute
+   * @param element {object} HTML element
+   * @param attributes {object} array of attributes
+   * @returns {void} void
+   */
   setAttr(element, attributes) {
     for (var key in attributes) {
       element.setAttribute(key, attributes[key]);
     }
   },
+
+  /**
+   * @function utility.checkInput
+   * @param user {string} value from user input
+   * @param period {string} year from available period
+   * @returns {boolean} true or false
+   */
   checkInput(user, period) {
     if (user.trim() === "") {
       return modal.Error('Silahkan isi kolom "Nama Peserta" terlebih dahulu.', "Mohon maaf dengan siapa?");
@@ -57,6 +143,13 @@ const utility = {
       return true;
     }
   },
+
+  /**
+   * @function utility.checkResult
+   * @param result {object} list of filtered people
+   * @param username {string} a person name
+   * @returns {boolean} true or false
+   */
   checkResult(result, username) {
     if (typeof result === "undefined" || result.length === 0) {
       return modal.Error(`Sepertinya ada masalah terkait nama anda, silahkan hubungi admin melalui E-Mail <tecopro.nepal@gmail.com> untuk informasi lebih lanjut.`, `Halo, ${input.user.value.replace(/(^\w|\s\w)(\S*)/g, (_, m1, m2) => m1.toUpperCase() + m2.toLowerCase())}!`);
@@ -66,6 +159,13 @@ const utility = {
       return true;
     }
   },
+
+  /**
+   * @async
+   * @function utility.search
+   * @param event {any} an event listener
+   * @returns {any} show error or modal based on specific condition
+   */
   search(event) {
     event.preventDefault();
     try {
@@ -112,13 +212,38 @@ const utility = {
     }
   },
 };
+/**
+ * D. Utility --- End
+ */
+
+/**
+ * 1. Global Variable --- End
+ */
+
+// @ <----- BREAK -----> @ //
+
+/**
+ * 2. Document Execution --- Start
+ */
 document.onreadystatechange = function () {
+  /**
+   * A. Period Parser --- Start
+   */
   var periodLists = new Array();
   for (const item of input.period.options) {
     if (item.value !== "default") {
       periodLists.push(item.value);
     }
   }
+  /**
+   * A. Period Parser --- End
+   */
+
+  // @ <----- BREAK -----> @ //
+
+  /**
+   * B. API & Database --- Start
+   */
   periodLists.forEach(async (year) => {
     var response = await axios.get(`https://raw.githubusercontent.com/tecopro/certificate-generator/${year}/data.json`).catch(function (error) {
       new Error(error);
@@ -126,6 +251,15 @@ document.onreadystatechange = function () {
     });
     sessionStorage.setItem(`${year}`, JSON.stringify(response.data));
   });
+  /**
+   * B. API & Database --- End
+   */
+
+  // @ <----- BREAK -----> @ //
+
+  /**
+   * C. Event Listener --- Start
+   */
   input.search.addEventListener("click", utility.search);
   document.addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
@@ -133,4 +267,10 @@ document.onreadystatechange = function () {
       input.search.click();
     }
   });
+  /**
+   * C. Event Listener --- End
+   */
 };
+/**
+ * 2. Document Execution --- End
+ */
